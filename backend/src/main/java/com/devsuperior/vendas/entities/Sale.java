@@ -1,10 +1,16 @@
 package com.devsuperior.vendas.entities;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+@Entity
+@Table(name = "tb_sale")
+public class Sale implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-public class Sale {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private LocalDate date;
     private Integer deals;
