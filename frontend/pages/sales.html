@@ -1,0 +1,42 @@
+<head>
+    <link rel="stylesheet" href="sales.css">
+</head>
+
+<h2>Vendas</h2>
+<div ng-repeat="sale in response.content" id="dsvendas-container">
+    <table>
+        <thead>
+                <td>
+                    ID
+                </td>
+
+        </thead>
+        <tbody>
+            <td>
+                <tr>
+                    {{sale.id}}
+                </tr>
+            </td>
+            <td>
+                <tr>
+                    {{sale.visited}}
+                </tr>
+            </td>
+            <td>
+                <tr>
+                    {{sale.deals}}
+                </tr>
+            </td>
+            <td>
+                <tr>
+                    {{sale.amount}}
+                </tr>
+            </td>
+            <td>
+                <tr>
+                    {{sale.date}}
+                </tr>
+            </td>
+        </tbody>
+    </table>
+</div>

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/sales")
 public class SaleResource {
@@ -19,8 +21,10 @@ public class SaleResource {
 
     @GetMapping
     public ResponseEntity<Page<SaleDTO>> findAll(Pageable pageable) {
-        Page<SaleDTO> page = service.findAll(pageable);
-        return ResponseEntity.ok().body(page);
+        Page<SaleDTO> list = service.findAll(pageable);
+        return ResponseEntity.ok().body(list);
     }
+
+
 
 }
