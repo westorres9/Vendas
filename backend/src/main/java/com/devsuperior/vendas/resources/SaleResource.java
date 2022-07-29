@@ -22,5 +22,5 @@ public class SaleResource {
         Page<SaleDTO> page = service.findAll(pageable);
         return ResponseEntity.ok().body(page);
     }
-    
+
 }
