@@ -1,8 +1,8 @@
 	// create the module and name it scotchApp
-	var scotchApp = angular.module('scotchApp', ['ngRoute']);
+	var vendasApp = angular.module('vendasApp', ['ngRoute']);
 
 	// configure our routes
-	scotchApp.config(function($routeProvider) {
+	vendasApp.config(function($routeProvider) {
 	  $routeProvider
 
 	  // route for the home page
@@ -12,29 +12,56 @@
 	  })
 
 	  // route for the about page
-	  .when('/about', {
-	    templateUrl: 'pages/about.html',
-	    controller: 'aboutController'
+	  .when('/teams', {
+	    templateUrl: 'pages/teams.html',
+	    controller: 'teamController'
 	  })
 
 	  // route for the contact page
 	  .when('/sales', {
 	    templateUrl: 'pages/sales.html',
 	    controller: 'salesController'
+	  })
+
+	  .when('/users', {
+	    templateUrl: 'pages/user.html',
+	    controller: 'userController'
 	  });
 	});
 
 	// create the controller and inject Angular's $scope
-	scotchApp.controller('mainController', function($scope) {
+	vendasApp.controller('mainController', function($scope) {
 	  // create a message to display in our view
 	  $scope.message = 'An Angular Controller injects this text by using $scope. ';
 	});
 
-	scotchApp.controller('aboutController', function($scope) {
-	  $scope.message = 'This site uses templateUrl and controllers.';
-	});
+	vendasApp.controller('teamController',  (function($rootScope,$http) {
+		var url = "http://localhost:8080/teams?format=json";
+			$http.get(url)
+			  .then(function(response) {
+				$rootScope.response = response.data;
+				console.log(response)
+			}).catch(function(response) {
+				$rootScope.response = 'ERROR: ' + response.status;
+			})  
 
-	scotchApp.controller('salesController', (function($rootScope,$http) { 
+		})
+	);
+
+	vendasApp.controller('userController',  (function($rootScope,$http) {
+		var url = "http://localhost:8080/users?format=json";
+			$http.get(url)
+			  .then(function(response) {
+				$rootScope.response = response.data;
+				console.log(response)
+			}).catch(function(response) {
+				$rootScope.response = 'ERROR: ' + response.status;
+			})  
+
+		})
+	);
+
+	vendasApp.controller('salesController', (function($rootScope,$http) { 
 			var url = "http://localhost:8080/sales?format=json";
 			$http.get(url)
 			  .then(function(response) {
