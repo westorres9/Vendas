@@ -17,6 +17,10 @@ public class Sale implements Serializable {
     private Integer visited;
     private Double amount;
 
+    @ManyToOne
+    @JoinColumn(name = "userSellerId")
+    private User seller;
+
     public Sale() {
     }
 
@@ -66,6 +70,14 @@ public class Sale implements Serializable {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public User getSeller() {
+        return seller;
+    }
+
+    public void setSeller(User seller) {
+        this.seller = seller;
     }
 
     @Override
