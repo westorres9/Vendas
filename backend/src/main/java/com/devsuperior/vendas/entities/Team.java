@@ -42,6 +42,13 @@ public class Team implements Serializable {
         return name;
     }
 
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
+    }
 
     @Override
     public boolean equals(Object o) {
