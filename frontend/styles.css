@@ -3,6 +3,7 @@
 * {
     margin: 0;
     padding: 0;
+
 }
 
 a, a:hover {
@@ -10,11 +11,15 @@ a, a:hover {
     color: unset;
 }
 
+body {
+    background-color: #e1e1e1;
+}
+
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 800;
     margin-bottom: 0;
+    font-weight: bold;
 }
 
 

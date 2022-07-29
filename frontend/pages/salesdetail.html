@@ -1,4 +1,4 @@
-<div class="sales-container" id="dsvendas-container">
+<div class="sales-container">
     <h2>Vendas</h2>
     <div class="sales-card">
         <div class="sales-content-container" >
@@ -25,7 +25,7 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="sale in response.content">
+                <tbody ng-repeat="sale in response">
                    <tr>
                         <td>
                             {{sale.id}}
@@ -50,6 +50,3 @@
             </table>
         </div>
     </div>
-
-
-</div>

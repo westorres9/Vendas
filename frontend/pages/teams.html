@@ -1,2 +1,37 @@
-<h2>Teams</h2>
-<div ng-repeat="team in response.content" id="dsvendas-container">{{team}}</div>
+<div class="teams-container">
+    <h2>Equipes</h2>
+    <div class="teams-card">
+        <div class="teams-content-container" >
+            <table class="dsvendas-teams-table table">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Equipe
+                        </th>
+                        <th>
+                            ID Lider
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="team in response.content">
+                   <tr>
+                        <td>
+                            {{team.id}}
+                        </td>
+                        <td>
+                            {{team.name}}
+                        </td>
+                        <td>
+                            {{team.managerId}}
+                        </td>
+                   </tr>     
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>

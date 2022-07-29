@@ -9,7 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,14 @@ public class SaleService {
     public Page<SaleDTO> findAll(Pageable pageable) {
         Page<Sale> page = repository.findAll(pageable);
         return page.map(x -> new SaleDTO(x));
-        }
     }
+
+    @Transactional(readOnly = true)
+    public SaleDTO findById(Long id) {
+        Optional<Sale> obj = repository.findById(id);
+        Sale entity = obj.orElseThrow(() -> new EntityNotFoundException("Entity not Found"));
+        return new SaleDTO(entity);
+    }
+
+}
 

@@ -9,7 +9,6 @@
 .nav-logo-text, .nav-logo-text:hover {
     color: #FFF;
     font-size: 22px;
-    font-weight: bold;
     margin-left: 20px;
 }
 
@@ -30,7 +29,6 @@
 
 .main-menu a.active {
     color: #FFF;
-    font-weight: 800;
 }
 
 .main-menu a:hover {

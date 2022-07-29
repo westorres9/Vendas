@@ -1,2 +1,37 @@
-<h2>User</h2>
-<div ng-repeat="user in response.content" id="dsvendas-container">{{user}}</div>
+<div class="user-container">
+    <h2>Usuarios</h2>
+    <div class="user-card">
+        <div class="user-content-container" >
+            <table class="dsvendas-user-table table">
+                <thead>
+                    <tr>
+                        <th>
+                            ID
+                        </th>
+                        <th>
+                            Nome
+                        </th>
+                        <th>
+                            Email
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="user in response.content">
+                   <tr>
+                        <td>
+                            {{user.id}}
+                        </td>
+                        <td>
+                            {{user.name}}
+                        </td>
+                        <td>
+                            {{user.email}}
+                        </td>
+                   </tr>     
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
