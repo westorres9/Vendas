@@ -1,7 +1,7 @@
 <div class="sales-container" id="dsvendas-container">
     <h2>Vendas</h2>
     <div class="sales-card">
-        <div class="sales-content-container" >
+        <div class="sales-content-container">
             <table class="dsvendas-sales-table table">
                 <thead>
                     <tr>
@@ -25,8 +25,8 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody ng-repeat="sale in response.content">
-                   <tr>
+                <tbody ng-repeat="sale in sales.content">
+                    <tr>
                         <td>
                             {{sale.id}}
                         </td>
@@ -43,11 +43,36 @@
                             {{sale.amount}}
                         </td>
                         <td>
-                            {{sale.sellerId}}
+                            {{sale.userSellerId}}
                         </td>
-                   </tr>     
+                        <td>
+                            <button class="btn btn-warning" ng-click="SelectSale(sale)" data-toogle="tooltip"
+                                title="Clique para Selecionar Venda">Selecionar</button>
+                            <button class="btn btn-danger"
+                                onclick="alert('Tem certeza que deseja apagar')">Apagar</button>
+                        </td>
+                    </tr>
                 </tbody>
+                
             </table>
+            <tr>
+                <td><input type="text" required ng-model="sale.id" placeholder="Cod da venda"></td>
+                <td><input type="text" required ng-model="sale.date" placeholder="Data da venda"></td>
+                <td><input type="text" required ng-model="sale.visited" placeholder="Visitas realizadas"></td>
+                <td><input type="text" required ng-model="sale.deals" placeholder="Quantidade de vendas"></td>
+                <td><input type="text" required ng-model="sale.amount" placeholder="Valor da venda"></td>
+                <td><input type="text" required ng-model="sale.userSellerId" placeholder="Id Vendedor"></td>
+                <td>
+                    <button href="#" class="btn btn-primary" ng-click="InsertSale(sale)"
+                        ng-disable="!sale.id || !sale.date " data-toogle="tooltip"
+                        title="Clique para Editar Venda">Novo</button>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success" ng-click="UpdateSale(sale)"
+                        ng-disable="!sale.id || !sale.date " data-toogle="tooltip"
+                        title="Clique para Editar Venda">Alterar</a>
+                </td>
+            </tr>
         </div>
     </div>
 

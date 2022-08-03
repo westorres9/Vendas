@@ -23,7 +23,7 @@ vendasApp.config(function ($routeProvider) {
 			controller: 'allSalesController'
 		})
 
-		.when("/sales/1", {
+		.when("/sales/:id", {
 			templateUrl: 'pages/salesdetail.html',
 			controller: 'salesByIdController'
 		})
@@ -40,61 +40,64 @@ vendasApp.controller('mainController', function ($scope) {
 	$scope.message = 'An Angular Controller injects this text by using $scope. ';
 });
 
-vendasApp.controller('teamController', (function ($rootScope, $http) {
+vendasApp.controller('teamController', (function ($scope, $http) {
 	var url = "http://localhost:8080/teams?format=json";
 	$http.get(url)
 		.then(function (response) {
-			$rootScope.response = response.data;
+			$scope.response = response.data;
 			console.log(response)
 		}).catch(function (response) {
-			$rootScope.response = 'ERROR: ' + response.status;
+			$scope.response = 'ERROR: ' + response.status;
 		})
-
 })
 );
 
-vendasApp.controller('userController', (function ($rootScope, $http) {
+vendasApp.controller('userController', (function ($scope, $http) {
 	var url = "http://localhost:8080/users?format=json";
 	$http.get(url)
 		.then(function (response) {
-			$rootScope.response = response.data;
+			$scope.response = response.data;
 			console.log(response)
 		}).catch(function (response) {
-			$rootScope.response = 'ERROR: ' + response.status;
+			$scope.response = 'ERROR: ' + response.status;
 		})
-
 })
 );
 
-vendasApp.controller('allSalesController', (function ($rootScope, $http) {
+vendasApp.controller('allSalesController', (function ($scope, $http) {
 	var url = "http://localhost:8080/sales?format=json";
 	$http.get(url)
 		.then(function (response) {
-			$rootScope.response = response.data;
+			$scope.sales = response.data;
 			console.log(response)
 		}).catch(function (response) {
-			$rootScope.response = 'ERROR: ' + response.status;
-		})
+			$scope.response = 'ERROR: ' + response.status;
+		});
+
+		$scope.sale = $scope.sales;
+		$scope.SelectSale = function(sale) {
+			$scope.sale = sale;
+		}
+
+		$scope.InsertSale = function(sale) {
+			$http.post("http://localhost:8080/sales", { sale } )
+			.then(function(response) {
+				$scope.sales = response;
+				delete $scope.sale;
+				$scope.GetAllSales();
+			})
+			.catch(function (response) {
+				$scope.response = 'ERROR: ' + response.status;
+			});
+		}
 })
 
 );
 
-vendasApp.controller('salesByIdController', (function ($rootScope, $http, $routeParams) {
-	var BASE_URL = 'http://localhost:8080/';
-	var sales = {
-		id : 1,
-		visited: '',
-		deals : '',
-		amount : '',
-		sellerId : '',
-	}
-	var url = BASE_URL + 'sales/'+ sales.id;
-	$http.get(url) 
-		.then(function (response) {
-			$rootScope.response = response.data;
-			console.log(response)
-		}).catch(function (response) {
-			$rootScope.response = 'ERROR: ' + response.status;
-		})
-})
-);
+vendasApp.controller('salesByIdController', (function ($routeParams) {
+	$routeParams.id;
+}));
+
+vendasApp.controller('ApagarController', (function($scope) {
+	alert("Tem certeza que deseja apagar");
+}))
