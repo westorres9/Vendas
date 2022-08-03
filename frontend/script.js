@@ -44,11 +44,16 @@ vendasApp.controller('teamController', (function ($scope, $http) {
 	var url = "http://localhost:8080/teams?format=json";
 	$http.get(url)
 		.then(function (response) {
-			$scope.response = response.data;
+			$scope.teams = response.data;
 			console.log(response)
 		}).catch(function (response) {
 			$scope.response = 'ERROR: ' + response.status;
 		})
+
+		$scope.team = $scope.team;
+		$scope.SelectTeam = function(team) {
+			$scope.team = team;
+		}
 })
 );
 
@@ -56,11 +61,16 @@ vendasApp.controller('userController', (function ($scope, $http) {
 	var url = "http://localhost:8080/users?format=json";
 	$http.get(url)
 		.then(function (response) {
-			$scope.response = response.data;
+			$scope.users = response.data;
 			console.log(response)
 		}).catch(function (response) {
 			$scope.response = 'ERROR: ' + response.status;
 		})
+
+		$scope.user = $scope.users;
+		$scope.SelectUser = function(user) {
+			$scope.user = user;
+		}
 })
 );
 
