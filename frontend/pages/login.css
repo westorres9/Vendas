@@ -1,0 +1,41 @@
+.login-container h2 {
+    margin: 20px 30px;
+}
+
+.login-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: auto;
+    margin: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.login-content-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    height: 400px;
+}
+
+.login-content-container h2 {
+    margin: 30px ;
+
+}
+
+.login-content-container label {
+    display: block;
+    text-align: left;
+    margin-left: 50px;
+}
+
+.login-content-container input {
+    margin-bottom: 30px;
+}
+
+.login-content-container .btn {
+    margin-bottom: 50px;
+    width: 100px;
+}

@@ -28,13 +28,29 @@
                             {{user.email}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">Editar</button>
+                            <button class="btn btn-warning"  ng-click="SelectUser(user)"  data-toogle="tooltip"
+                            title="Clique para Selecionar Usuario">Selecionar</button>
                         </td>
                         <td>
                             <button class="btn btn-danger" onclick="alert('Tem certeza que deseja apagar')">Apagar</button>
                         </td>
                    </tr>     
                 </tbody>
+                <tr>
+                    <td><input type="text" required ng-model="user.id" placeholder="Id do usuario"></td>
+                    <td><input type="text" required ng-model="user.name" placeholder="Nome do usuario"></td>
+                    <td><input type="text" required ng-model="user.email" placeholder="Email do usuario"></td>
+                    <td>
+                        <button href="#" class="btn btn-primary" ng-click="InsertUser(user)"
+                            ng-disable="!user.id || !user.name || !user.email" data-toogle="tooltip"
+                            title="Clique para Inserir Usuario">Novo</button>
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-success" ng-click="UpdateUser(user)"
+                            ng-disable="!user.id || !user.name || !user.email" data-toogle="tooltip"
+                            title="Clique para Editar Usuario">Alterar</a>
+                    </td>
+                </tr>
             </table>
         </div>
     </div>

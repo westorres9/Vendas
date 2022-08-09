@@ -7,6 +7,8 @@ import com.devsuperior.vendas.repositories.SaleRepository;
 import com.devsuperior.vendas.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -51,6 +53,35 @@ public class SaleService {
     	entity.getSeller().setId(user.getId());
     	return new SaleDTO(entity);
     }
+    
+    @Transactional
+    public SaleDTO update(Long id, SaleDTO dto) {
+            try {
+                Sale entity = repository.getReferenceById(id);
+                entity.setDate(dto.getDate());
+                entity.setVisited(dto.getVisited());
+                entity.setDeals(dto.getDeals());
+                entity.setAmount(dto.getAmount());
+                entity.setSeller(userRepository.getReferenceById(id));
+                entity = repository.save(entity);
+                return new SaleDTO(entity);
+            } catch (EntityNotFoundException e) {
+                throw new EntityNotFoundException("Entity not found");
+            }
+        } 
+
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new EntityNotFoundException("Id not found" + id);
+        }
+        catch (DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("Integrity violation");
+        }
+    }
+
 
 }
 

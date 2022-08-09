@@ -28,14 +28,30 @@
                             {{team.managerId}}
                         </td>
                         <td>
-                            <button class="btn btn-warning">Editar</button>
+                            <button class="btn btn-warning" ng-click="SelectTeam(team)"  data-toogle="tooltip"
+                            title="Clique para Selecionar Equipe">Selecionar</button>
                         </td>
                         <td>
-                            <button class="btn btn-danger" onclick="alert('Tem certeza que deseja apagar')">Apagar</button>
+                            <button class="btn btn-danger" onclick="alert('Tem certeza que deseja apagar')" ng-click="DeleteTeam(team)">Apagar</button>
                         </td>
                    </tr>     
                 </tbody>
             </table>
+            <tr>
+                <td><input type="text" required ng-model="team.id" placeholder="Cod da equipe"></td>
+                <td><input type="text" required ng-model="team.name" placeholder="Nome da equipe"></td>
+                <td><input type="text" required ng-model="team.managerId" placeholder="Id Lider Equipe"></td>
+                <td>
+                    <button href="#" class="btn btn-primary" ng-click="InsertTeam(team)"
+                        ng-disable="!team.id || !team.name || !team.managerId" data-toogle="tooltip"
+                        title="Clique para Inserir Equipe">Novo</button>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success" ng-click="UpdateTeam(team)"
+                        ng-disable="!team.id || !team.name || !team.sellerId" data-toogle="tooltip"
+                        title="Clique para Editar Equipe">Alterar</a>
+                </td>
+            </tr>
         </div>
     </div>
 
