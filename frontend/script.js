@@ -45,7 +45,7 @@ vendasApp.controller('mainController', function ($scope) {
 	$scope.message = 'An Angular Controller injects this text by using $scope. ';
 });
 
-vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike) {
+vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike, AuthService) {
 	$scope.user = { 'grant_type': 'password' };
 
 
@@ -61,12 +61,18 @@ vendasApp.controller("loginController", function ($scope, $http, $httpParamSeria
 				}
 			})
 			.then(function (response) {
-				access_token = response.data.access_token;
-				console.log(access_token);
+				const loginResponse = response.data;
+				console.log('response', response)
+				console.log(AuthService.setToken);
+				AuthService.setToken(loginResponse);
+				console.log('log2', AuthService.getToken())
+				console.log(AuthService);
 			}).catch(function (response) {
 				console.log("Falha" + response.data);
 			});
 	}
+
+	
 })
 
 vendasApp.controller('teamController', (function ($scope, $http) {
@@ -236,3 +242,21 @@ vendasApp.controller('salesByIdController', (function ($routeParams) {
 vendasApp.controller('ApagarController', (function ($scope) {
 	alert("Tem certeza que deseja apagar");
 }))
+
+
+
+vendasApp.factory('AuthService', AuthService);
+function AuthService () {
+	return {
+	 
+	  setToken: function (token) {
+		window.localStorage.setItem('access_token', angular.toJson(token));
+		console.log('authService.setToken', token)
+	  },
+	  getToken: function () {
+		let token = window.localStorage.getItem('access_token');
+		return angular.fromJson(token);
+		console.log(window.localStorage.getItem('access_token'))
+	},
+	};
+  }
