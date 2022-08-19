@@ -23,6 +23,9 @@
                         <th>
                             ID Vendedor
                         </th>
+                        <th>
+                            Nome Vendedor
+                        </th>
                     </tr>
                 </thead>
                 <tbody ng-repeat="sale in sales.content">
@@ -44,6 +47,9 @@
                         </td>
                         <td>
                             {{sale.sellerId}}
+                        </td>
+                        <td>
+                            {{sale.sellerName}}
                         </td>
                         <td>
                             <button class="btn btn-warning" ng-click="SelectSale(sale)" data-toogle="tooltip"
