@@ -45,10 +45,8 @@ vendasApp.controller('mainController', function ($scope) {
 	$scope.message = 'An Angular Controller injects this text by using $scope. ';
 });
 
-vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike, AuthService) {
+vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike, $window , AuthService) {
 	$scope.user = { 'grant_type': 'password' };
-
-
 	$scope.authenticate = function () {
 		var CLIENT_ID = 'dsvendas'
 		var CLIENT_SECRET = 'dsvendas123'
@@ -60,31 +58,36 @@ vendasApp.controller("loginController", function ($scope, $http, $httpParamSeria
 					'Authorization': 'Basic ' + window.btoa(CLIENT_ID + ':' + CLIENT_SECRET)
 				}
 			})
-			.then(function (response) {
+			.then(function (response, $window) {
 				const loginResponse = response.data;
 				console.log('response', response)
 				console.log(AuthService.setToken);
 				AuthService.setToken(loginResponse);
-				console.log('log2', AuthService.getToken())
-				console.log(AuthService);
+				console.log('log2', AuthService.getToken());
 			}).catch(function (response) {
 				console.log("Falha" + response.data);
 			});
 	}
-
-	
 })
 
-vendasApp.controller('teamController', (function ($scope, $http) {
-	var url = "http://localhost:8080/teams?format=json";
-	$http.get(url)
+vendasApp.controller('teamController', (function ($scope, $http, AuthService) {
+	var url = "http://localhost:8080/teams";
+
+	const token = AuthService.getToken();
+
+	
+	$http.get(url,
+	{
+		headers: {
+			'Authorization': 'Bearer ' +  token.access_token
+		}
+	})
 		.then(function (response) {
 			$scope.teams = response.data;
 			console.log(response)
 		}).catch(function (response) {
 			$scope.response = 'ERROR: ' + response.status;
 		})
-
 	$scope.team = $scope.team;
 	$scope.SelectTeam = function (team) {
 		$scope.team = team;
@@ -103,7 +106,7 @@ vendasApp.controller('teamController', (function ($scope, $http) {
 	}
 
 	$scope.UpdateTeam = function (team) {
-		$http.put("http://localhost:8080/team/:teamId", { team })
+		$http.put("http://localhost:8080/team/" + team.id, { team })
 			.then(function (response) {
 				$scope.teams = response;
 				delete $scope.team;
@@ -115,7 +118,7 @@ vendasApp.controller('teamController', (function ($scope, $http) {
 	}
 
 	$scope.DeleteTeam = function (team) {
-		$http.delete("http://localhost:8080/teams/:teamId", { team })
+		$http.delete("http://localhost:8080/teams/" + team.id, { team })
 			.then(function (response) {
 				$scope.teams = response;
 				delete $scope.team;
@@ -128,9 +131,18 @@ vendasApp.controller('teamController', (function ($scope, $http) {
 })
 );
 
-vendasApp.controller('userController', (function ($scope, $http) {
-	var url = "http://localhost:8080/users?format=json";
-	$http.get(url)
+vendasApp.controller('userController', (function ($scope, $http, AuthService) {
+	var url = "http://localhost:8080/users";
+
+	const token = AuthService.getToken();
+
+	
+	$http.get(url,
+	{
+		headers: {
+			'Authorization': 'Bearer ' +  token.access_token
+		}
+	})
 		.then(function (response) {
 			$scope.users = response.data;
 			console.log(response)
@@ -144,7 +156,12 @@ vendasApp.controller('userController', (function ($scope, $http) {
 	}
 
 	$scope.InsertUser = function (user) {
-		$http.post("http://localhost:8080/users?format=json", { user })
+		$http.post(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' +  token.access_token
+				}
+			}, { user })		
 			.then(function (response) {
 				$scope.users = response;
 				delete $scope.user;
@@ -156,7 +173,11 @@ vendasApp.controller('userController', (function ($scope, $http) {
 	}
 
 	$scope.UpdateUser = function (user) {
-		$http.put(`http://localhost:8080/users/${$scope.user.id}`, { user })
+		$http.put(`http://localhost:8080/users/${user.id}`, {
+			headers: {
+				'Authorization': 'Bearer ' +  token.access_token
+			}
+		}, { user })
 			.then(function (response) {
 				$scope.users = response;
 				delete $scope.user;
@@ -181,12 +202,21 @@ vendasApp.controller('userController', (function ($scope, $http) {
 })
 );
 
-vendasApp.controller('allSalesController', (function ($scope, $http) {
-	var url = "http://localhost:8080/sales?format=json";
-	$http.get(url)
+vendasApp.controller('allSalesController', (function ($scope, $http, AuthService) {
+	var url = "http://localhost:8080/sales";
+	const token = AuthService.getToken();
+
+	
+	$http.get(url,
+	{
+		headers: {
+			'Authorization': 'Bearer ' +  token.access_token
+		}
+	})
 		.then(function (response) {
 			$scope.sales = response.data;
 			console.log(response)
+			console.log(AuthService.getToken())
 		}).catch(function (response) {
 			$scope.response = 'ERROR: ' + response.status;
 		});
@@ -260,3 +290,9 @@ function AuthService () {
 	},
 	};
   }
+
+vendasApp.factory('isAuthenticated', isAutenticated);
+function isAutenticated() {
+	const token = AuthService().getToken;
+	return token;
+}
