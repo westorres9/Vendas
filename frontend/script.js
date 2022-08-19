@@ -45,7 +45,7 @@ vendasApp.controller('mainController', function ($scope) {
 	$scope.message = 'An Angular Controller injects this text by using $scope. ';
 });
 
-vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike, $window , AuthService) {
+vendasApp.controller("loginController", function ($scope, $http, $httpParamSerializerJQLike , AuthService) {
 	$scope.user = { 'grant_type': 'password' };
 	$scope.authenticate = function () {
 		var CLIENT_ID = 'dsvendas'
@@ -224,10 +224,36 @@ vendasApp.controller('allSalesController', (function ($scope, $http, AuthService
 	$scope.sale = $scope.sales;
 	$scope.SelectSale = function (sale) {
 		$scope.sale = sale;
+		JSON.stringify(sale)
+		console.log(sale);
 	}
 
-	$scope.InsertSale = function (sale) {
-		$http.post("http://localhost:8080/sales", { sale })
+	$scope.InsertSale = function (url, sale) {
+		$http.post(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' +  token.access_token
+				}
+			}, JSON.stringify(sale))
+			.then(function (response) {
+				
+				$scope.sales = response;
+				delete $scope.sale;
+				$scope.GetAllSales();
+			})
+			.catch(function (response) {
+				$scope.response = 'ERROR: ' + response.status;
+			});
+	}
+
+	$scope.UpdateSale = function (sale,AuthService) {
+		const token = AuthService.getToken();
+		$http.put(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' +  token.access_token
+				}
+			}, { sale })
 			.then(function (response) {
 				$scope.sales = response;
 				delete $scope.sale;
@@ -238,20 +264,15 @@ vendasApp.controller('allSalesController', (function ($scope, $http, AuthService
 			});
 	}
 
-	$scope.UpdateSale = function (sale) {
-		$http.put("http://localhost:8080/sales/:saleId", { sale })
-			.then(function (response) {
-				$scope.sales = response;
-				delete $scope.sale;
-				$scope.GetAllSales();
-			})
-			.catch(function (response) {
-				$scope.response = 'ERROR: ' + response.status;
-			});
-	}
+	$scope.DeleteSale = function (sale,AuthService) {
+		const token = AuthService.getToken();
 
-	$scope.DeleteSale = function (sale) {
-		$http.delete("http://localhost:8080/sales/:saleId", { sale })
+		$http.delete(url,
+			{
+				headers: {
+					'Authorization': 'Bearer ' +  token.access_token
+				}
+			}, { sale })
 			.then(function (response) {
 				$scope.sales = response;
 				delete $scope.sale;

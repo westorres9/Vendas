@@ -43,7 +43,7 @@
                             {{sale.amount}}
                         </td>
                         <td>
-                            {{sale.userSellerId}}
+                            {{sale.sellerId}}
                         </td>
                         <td>
                             <button class="btn btn-warning" ng-click="SelectSale(sale)" data-toogle="tooltip"
@@ -61,7 +61,7 @@
                 <td><input type="text" required ng-model="sale.visited" placeholder="Visitas realizadas"></td>
                 <td><input type="text" required ng-model="sale.deals" placeholder="Quantidade de vendas"></td>
                 <td><input type="text" required ng-model="sale.amount" placeholder="Valor da venda"></td>
-                <td><input type="text" required ng-model="sale.userSellerId" placeholder="Id Vendedor"></td>
+                <td><input type="text" required ng-model="sale.sellerId" placeholder="Id Vendedor"></td>
                 <td>
                     <button href="#" class="btn btn-primary" ng-click="InsertSale(sale)"
                         ng-disable="!sale.id || !sale.date " data-toogle="tooltip"
