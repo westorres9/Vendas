@@ -4,12 +4,7 @@ vendasApp.controller('teamController', (function ($scope, $http, AuthService) {
 	const token = AuthService.getToken();
 
 	
-	$http.get(url,
-	{
-		headers: {
-			'Authorization': 'Bearer ' +  token.access_token
-		}
-	})
+	$http.get(url)
 		.then(function (response) {
 			$scope.teams = response.data;
 			console.log(response)

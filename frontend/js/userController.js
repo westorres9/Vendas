@@ -2,14 +2,7 @@ vendasApp.controller('userController', (function ($scope, $http, AuthService) {
 	var url = "http://localhost:8080/users";
 
 	const token = AuthService.getToken();
-
-	
-	$http.get(url,
-	{
-		headers: {
-			'Authorization': 'Bearer ' +  token.access_token
-		}
-	})
+	$http.get(url)
 		.then(function (response) {
 			$scope.users = response.data;
 			console.log(response)

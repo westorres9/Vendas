@@ -2,12 +2,7 @@ vendasApp.controller('allSalesController', (function ($scope, $http, AuthService
 	var url = "http://localhost:8080/sales";
 
 	const token = AuthService.getToken();
-	$http.get(url,
-	{
-		headers: {
-			'Authorization': 'Bearer ' +  token.access_token
-		}
-	})
+	$http.get(url)
 		.then(function (response) {
 			$scope.sales = response.data;
 		}).catch(function (response) {

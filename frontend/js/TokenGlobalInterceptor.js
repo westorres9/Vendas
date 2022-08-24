@@ -1,16 +1,10 @@
-vendasApp.factory('Interceptor', Interceptor) {
+vendasApp.factory('tokenGlobalInterceptor', Interceptor);
     Interceptor.inject = ['$q'];
     function Interceptor($q) {
-        
-    }
-}
-
-vendasApp.factory('tokenGlobalInterceptor', function() {
     return {
         request: function(config) {
-                const token = AuthService.getToken();
-    
-                config.headers['access_token'] = 'Bearer ' +  token.access_token;
+            const token = AuthService().getToken();
+                config.headers['Authorization'] = 'Bearer ' + token.access_token;
                 console.log(config);
                 return config;
             },
@@ -22,10 +16,9 @@ vendasApp.factory('tokenGlobalInterceptor', function() {
             }
         }
             return config;
-        }
-    }
-});
-
+            
+        };
+    
 vendasApp.config(function ($httpProvider){
     $httpProvider.interceptors.push('tokenGlobalInterceptor');
 })
