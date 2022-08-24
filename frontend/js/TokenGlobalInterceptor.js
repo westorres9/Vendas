@@ -8,7 +8,19 @@ vendasApp.factory('Interceptor', Interceptor) {
 vendasApp.factory('tokenGlobalInterceptor', function() {
     return {
         request: function(config) {
-            console.log(config);
+                const token = AuthService.getToken();
+    
+                config.headers['access_token'] = 'Bearer ' +  token.access_token;
+                console.log(config);
+                return config;
+            },
+            responseError: function(error) {
+                if (error.status === 401 || error.status === 403) {
+                    console.log(config);
+                }
+                return $q.reject(error);
+            }
+        }
             return config;
         }
     }
