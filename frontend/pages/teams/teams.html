@@ -12,7 +12,10 @@
                             Equipe
                         </th>
                         <th>
-                            ID Lider
+                            ID Gestor
+                        </th>
+                        <th>
+                            Nome Gestor
                         </th>
                     </tr>
                 </thead>
@@ -26,6 +29,9 @@
                         </td>
                         <td>
                             {{team.managerId}}
+                        </td>
+                        <td>
+                            {{team.managerName}}
                         </td>
                         <td>
                             <button class="btn btn-warning" ng-click="SelectTeam(team)"  data-toogle="tooltip"
